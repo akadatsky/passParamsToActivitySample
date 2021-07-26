@@ -1,11 +1,13 @@
 package com.akadatsky.bundlesample2
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,16 +19,13 @@ class MainActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.password)
 
         findViewById<Button>(R.id.next).setOnClickListener {
-
             Storage.status = "logined"
-
-            val intent = Intent(this, SecondActivity::class.java).apply {
-                putExtra("login", login.text.toString())
-                putExtra("password", password.text.toString())
-            }
-            startActivity(intent)
+            val params = bundleOf(
+                "login" to login.text.toString(),
+                "password" to password.text.toString()
+            )
+            openNextActivity(SecondActivity::class.java, params)
         }
-
     }
 
 }
